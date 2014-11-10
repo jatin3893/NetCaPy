@@ -6,19 +6,26 @@ from PyQt4.QtCore import Qt
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
-        self.Ui = loadUi('ui/MainWindow.ui', self)
+        self.initUi()
 
         self.AnalysisList = ["PacketCount"]
-        self.FiltersList = ["BPF", "Custom"]
+        self.FiltersList = ["BPF"]
 
         self.LoadInput()
         self.LoadAnalysis()
         self.LoadFilters()
 
-        captureFrame = CaptureFrame()
-        self.Ui.tabWidget.addTab(captureFrame, "Main Page")
+        self.AddCustomFilter("Custom")
 
         self.show()
+
+    def initUi(self):
+        self.Ui = loadUi('ui/MainWindow.ui', self)
+
+        self.Ui.toolbarFilter.addStretch();
+
+        captureFrame = CaptureFrame()
+        self.Ui.tabWidget.addTab(captureFrame, "Main Page")
 
     def LoadInput(self):
         print "Load Input"
@@ -32,19 +39,27 @@ class MainWindow(QMainWindow):
         print "Load Filters"
         for filter in self.FiltersList:
             self.AddFilter(filter)
-        self.Ui.toolbarFilter.addStretch()
 
+    #
+    # Could lead to run time errors. Use try/catch to detect import errors
     def AddFilter(self, filter):
         filter = filter + "_ui"
         path = "src.Filter." + filter
         mod = __import__(path, fromlist=[filter])
         filterClass = getattr(mod, filter)
         object = filterClass()
-        self.Ui.toolbarFilter.addWidget(object.frame)
+        self.Ui.toolbarFilter.insertWidget(self.Ui.toolbarFilter.count() - 1, object.frame)
 
+    # 
+    # Could lead to run time errors. Use try/catch to detect import errors
     def AddAnalysis(self, analysis):
         analysis = analysis + "_ui"
         path = "src.Analysis." + analysis
         mod = __import__(path, fromlist=[analysis])
         AnalysisClass = getattr(mod, analysis)
         object = AnalysisClass()
+
+    # This can be used to load a Filter at RunTime
+    def AddCustomFilter(self, customFilter):
+        self.FiltersList.append(customFilter)
+        self.AddFilter(customFilter)
