@@ -1,7 +1,8 @@
 from PyQt4.uic import loadUi
-from PyQt4.QtGui import QMainWindow
+from PyQt4.QtGui import QMainWindow, QAction
 from Others.CaptureFrame import CaptureFrame
 from PyQt4.QtCore import Qt
+from PyQt4.QtCore import SLOT
 
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
@@ -43,12 +44,13 @@ class MainWindow(QMainWindow):
     #
     # Could lead to run time errors. Use try/catch to detect import errors
     def AddFilter(self, filter):
-        filter = filter + "_ui"
-        path = "src.Filter." + filter
-        mod = __import__(path, fromlist=[filter])
-        filterClass = getattr(mod, filter)
-        object = filterClass()
+        filterUi = filter + "_ui"
+        path = "src.Filter." + filterUi
+        mod = __import__(path, fromlist=[filterUi])
+        filterClass = getattr(mod, filterUi)
+        object = filterClass(self.Ui.menuFilter)
         self.Ui.toolbarFilter.insertWidget(self.Ui.toolbarFilter.count() - 1, object.frame)
+        self.Ui.menuFilter.addAction(object.action)
 
     # 
     # Could lead to run time errors. Use try/catch to detect import errors
