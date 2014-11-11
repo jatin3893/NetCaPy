@@ -30,8 +30,8 @@ class BPFFrame(FilterFrame):
     @pyqtSlot()
     def buttonApplyClicked(self):
         print "Apply Button on BPF Filter Clicked"
-		applyFilter(self.Ui.lineEditExpression.text, PcapFile)
-		
+        applyFilter(self.Ui.lineEditExpression.text, PcapFile)
+        
 #################################################################
 class BPFAction(FilterAction):
     def __init__(self, filterUi, parent = None):
