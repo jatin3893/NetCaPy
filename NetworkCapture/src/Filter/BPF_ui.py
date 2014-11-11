@@ -8,7 +8,11 @@ class BPF_ui(Filter_ui):
     def __init__(self, parentMenu = None):
         Filter_ui.__init__(self)
         self.frame = BPFFrame()
-        self.action = BPFAction(parentMenu)
+        self.action = BPFAction(self, parentMenu)
+    
+    @pyqtSlot()
+    def OnTrigger(self):
+        print "BPF Action Triggered"
 
 #################################################################
 class BPFFrame(FilterFrame):
@@ -29,11 +33,6 @@ class BPFFrame(FilterFrame):
 
 #################################################################
 class BPFAction(FilterAction):
-    def __init__(self, parent = None):
-        FilterAction.__init__(self, parent)
+    def __init__(self, filterUi, parent = None):
+        FilterAction.__init__(self, filterUi, parent)
         self.setText("BPF")
-        self.triggered.connect(self.OnTrigger)
-
-    @pyqtSlot()
-    def OnTrigger(self):
-        print "BPF Action Triggered"

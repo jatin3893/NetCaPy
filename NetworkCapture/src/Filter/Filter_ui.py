@@ -1,11 +1,16 @@
+from abc import abstractmethod
 from PyQt4.QtGui import QFrame, QAction
-from PyQt4.QtCore import pyqtSlot
+from PyQt4.QtCore import pyqtSlot, QObject
 
 #################################################################
-class Filter_ui():
-    def __init__(self):
-        print "Filter Ui"
+class Filter_ui(QObject):
+    def __init__(self, parent = None):
+        super(Filter_ui, self).__init__(parent)
 
+    @abstractmethod
+    def OnTrigger(self):
+    	pass
+    	
 #################################################################
 class FilterFrame(QFrame):
     def __init__(self, parent = None):
@@ -13,9 +18,11 @@ class FilterFrame(QFrame):
 
 #################################################################
 class FilterAction(QAction):
-    def __init__(self, parent = None):
+    def __init__(self, filterUi, parent = None):
         super(FilterAction, self).__init__(parent)
+        self.triggered.connect(self.OnTrigger)
+        self.filterUi = filterUi
 
     @pyqtSlot()
     def OnTrigger(self):
-        print "Custom Action Triggered"
+        self.filterUi.OnTrigger()

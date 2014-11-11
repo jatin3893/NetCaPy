@@ -8,7 +8,10 @@ class Custom_ui(Filter_ui):
     def __init__(self, parentMenu = None):
         Filter_ui.__init__(self)
         self.frame = CustomFrame()
-        self.action = CustomAction(parentMenu)
+        self.action = CustomAction(self, parentMenu)
+
+    def OnTrigger(self):
+        print "Custom Ui Trigger"
 
 #################################################################
 class CustomFrame(FilterFrame):
@@ -23,11 +26,6 @@ class CustomFrame(FilterFrame):
 
 #################################################################
 class CustomAction(FilterAction):
-    def __init__(self, parent = None):
-        FilterAction.__init__(self, parent)
+    def __init__(self, filterUi, parent = None):
+        FilterAction.__init__(self, filterUi, parent)
         self.setText("Custom")
-        self.triggered.connect(self.OnTrigger)
-
-    @pyqtSlot()
-    def OnTrigger(self):
-        print "Custom Action Triggered"
