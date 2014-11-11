@@ -18,4 +18,4 @@ class TestCapture(TestCase):
 		
 		self.assertRaises(Exception, send, packet1)
 if __name__ == '__main__':
-main()
+	main()
