@@ -4,4 +4,5 @@ import sys
 
 App = QApplication(sys.argv)
 window = MainWindow()
+window.AddCustomFilter("Custom")
 App.exec_() 

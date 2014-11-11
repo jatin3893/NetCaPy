@@ -17,10 +17,15 @@ class BPFFrame(QFrame):
         self.Ui = loadUi('ui/Filter/BPF_ui.ui', self)
 
         self.Ui.buttonClear.clicked.connect(self.buttonClearClicked)
+        self.Ui.buttonApply.clicked.connect(self.buttonApplyClicked)
 
     @pyqtSlot()
     def buttonClearClicked(self):
         self.Ui.lineEditExpression.clear()
+
+    @pyqtSlot()
+    def buttonApplyClicked(self):
+        print "Apply Button on BPF Filter Clicked"
 
 # For adding QAction in the Menu Bar
 class BPFAction(QAction):

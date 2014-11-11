@@ -16,8 +16,6 @@ class MainWindow(QMainWindow):
         self.LoadAnalysis()
         self.LoadFilters()
 
-        self.AddCustomFilter("Custom")
-
         self.show()
 
     def initUi(self):
@@ -40,6 +38,9 @@ class MainWindow(QMainWindow):
         print "Load Filters"
         for filter in self.FiltersList:
             self.AddFilter(filter)
+
+    def LoadHelpMenu(self):
+        print "Load Help Menu"
 
     #
     # Could lead to run time errors. Use try/catch to detect import errors

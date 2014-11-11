@@ -13,6 +13,11 @@ class CustomFrame(QFrame):
     def __init__(self, parent = None):
         super(CustomFrame, self).__init__(parent)
         self.Ui = loadUi('ui/Filter/Custom_ui.ui', self)
+        self.Ui.buttonCustom.clicked.connect(self.buttonCustomClicked)
+    
+    @pyqtSlot()
+    def buttonCustomClicked(self):
+        print "Custom Button Clicked"
 
 # For adding QAction in the Menu Bar
 # To be made Optional
