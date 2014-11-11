@@ -1,19 +1,23 @@
+from Filter_ui import Filter_ui, FilterAction, FilterFrame
 from BPF import BPF
 from PyQt4.QtCore import pyqtSlot
-from PyQt4.QtGui import QFrame, QAction
 from PyQt4.uic import loadUi
 
-class BPF_ui():
+#################################################################
+class BPF_ui(Filter_ui):
     def __init__(self, parentMenu = None):
-        print "BPF Filter Base Class"
+        Filter_ui.__init__(self)
         self.frame = BPFFrame()
-        self.action = BPFAction(parentMenu)
+        self.action = BPFAction(self, parentMenu)
+    
+    @pyqtSlot()
+    def OnTrigger(self):
+        print "BPF Action Triggered"
 
-# For adding shortcut in the toolbar
-# To be made optional
-class BPFFrame(QFrame):
+#################################################################
+class BPFFrame(FilterFrame):
     def __init__(self, parent = None):
-        super(BPFFrame, self).__init__()
+        FilterFrame.__init__(self, parent)
         self.Ui = loadUi('ui/Filter/BPF_ui.ui', self)
 
         self.Ui.buttonClear.clicked.connect(self.buttonClearClicked)
@@ -27,13 +31,8 @@ class BPFFrame(QFrame):
     def buttonApplyClicked(self):
         print "Apply Button on BPF Filter Clicked"
 
-# For adding QAction in the Menu Bar
-class BPFAction(QAction):
-    def __init__(self, parent = None):
-        super(BPFAction, self).__init__(parent)
+#################################################################
+class BPFAction(FilterAction):
+    def __init__(self, filterUi, parent = None):
+        FilterAction.__init__(self, filterUi, parent)
         self.setText("BPF")
-        self.triggered.connect(self.OnTrigger)
-
-    @pyqtSlot()
-    def OnTrigger(self):
-        print "BPF Action Triggered"

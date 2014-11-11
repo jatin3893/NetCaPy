@@ -4,6 +4,7 @@ from Others.CaptureFrame import CaptureFrame
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 
+#################################################################
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
@@ -60,7 +61,8 @@ class MainWindow(QMainWindow):
         path = "src.Analysis." + analysis
         mod = __import__(path, fromlist=[analysis])
         AnalysisClass = getattr(mod, analysis)
-        object = AnalysisClass()
+        object = AnalysisClass(self.Ui.menuAnalysis)
+        self.Ui.menuAnalysis.addAction(object.action)
 
     # This can be used to load a Filter at RunTime
     def AddCustomFilter(self, customFilter):

@@ -4,6 +4,7 @@ from PyQt4.QtCore import pyqtSlot
 
 import webbrowser;
 
+#################################################################
 class CaptureFrame(QFrame):
     def __init__(self, parent = None):
         super(CaptureFrame, self).__init__(parent)
