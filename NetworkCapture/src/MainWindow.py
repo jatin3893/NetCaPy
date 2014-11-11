@@ -4,6 +4,7 @@ from Others.CaptureFrame import CaptureFrame
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 
+#################################################################
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)

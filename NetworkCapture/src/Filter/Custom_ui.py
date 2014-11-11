@@ -1,17 +1,19 @@
+from Filter_ui import Filter_ui, FilterAction, FilterFrame
 from Custom import Custom
 from PyQt4.QtCore import pyqtSlot
-from PyQt4.QtGui import QFrame, QAction
 from PyQt4.uic import loadUi
 
-class Custom_ui():
+#################################################################
+class Custom_ui(Filter_ui):
     def __init__(self, parentMenu = None):
-        print "Custom Filter Base Class"
+        Filter_ui.__init__(self)
         self.frame = CustomFrame()
         self.action = CustomAction(parentMenu)
 
-class CustomFrame(QFrame):
+#################################################################
+class CustomFrame(FilterFrame):
     def __init__(self, parent = None):
-        super(CustomFrame, self).__init__(parent)
+        FilterFrame.__init__(self, parent)
         self.Ui = loadUi('ui/Filter/Custom_ui.ui', self)
         self.Ui.buttonCustom.clicked.connect(self.buttonCustomClicked)
     
@@ -19,11 +21,10 @@ class CustomFrame(QFrame):
     def buttonCustomClicked(self):
         print "Custom Button Clicked"
 
-# For adding QAction in the Menu Bar
-# To be made Optional
-class CustomAction(QAction):
+#################################################################
+class CustomAction(FilterAction):
     def __init__(self, parent = None):
-        super(CustomAction, self).__init__(parent)
+        FilterAction.__init__(self, parent)
         self.setText("Custom")
         self.triggered.connect(self.OnTrigger)
 
