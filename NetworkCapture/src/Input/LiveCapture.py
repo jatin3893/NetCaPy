@@ -4,13 +4,19 @@ class LiveCapture:
 	def __init__(self):
 		self.packetBuffer = []
 		self.packetList = []
+		self.liveCaptureThread = LiveCaptureThread(self)
 
 	def getPacketList(self):
 		return self.packetList
 
-	def getPacketBuffer(self):
-		return self.packetBuffer
+	def getPacket(self):
+		if not self.packetBuffer:
+			return None
+		else:
+			return self.packetBuffer.pop(0)
 
 	def startLiveCapture(self):
-		self.liveCaptureThread = LiveCaptureThread(self)
 		self.liveCaptureThread.start()
+
+	def stopLiveCapturing(self):
+		self.liveCaptureThread.flag = True;
