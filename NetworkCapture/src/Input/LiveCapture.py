@@ -6,6 +6,7 @@ class LiveCapture:
         self.packetBuffer = []
         self.packetList = []
         self.liveCaptureThread = LiveCaptureThread(self)
+        self.interface = ''
 
     def getPacketList(self):
         return self.packetList
@@ -24,4 +25,10 @@ class LiveCapture:
         self.liveCaptureThread.start()
 
     def stopLiveCapture(self):
-        self.liveCaptureThread.flag = True;
+        self.liveCaptureThread.flag = True
+
+    def getInterface(self):
+        return self.interface
+
+    def setInterface(self, interface):
+        self.interface = interface
