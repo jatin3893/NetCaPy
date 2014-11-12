@@ -6,7 +6,7 @@ class LiveCapture:
         self.packetBuffer = []
         self.packetList = []
         self.liveCaptureThread = LiveCaptureThread(self)
-        self.interface = ''
+        self.interface = 'eth0'
 
     def getPacketList(self):
         return self.packetList

@@ -9,7 +9,7 @@ class LiveCaptureThread(threading.Thread):
 
     def run(self):
         try:
-            sniff(prn=self.recv)
+            sniff(prn=self.recv, iface=self.liveCaptureObj.interface)
         except Exception:
             pass
 
