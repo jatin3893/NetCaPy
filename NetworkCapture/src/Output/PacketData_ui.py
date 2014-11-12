@@ -2,13 +2,19 @@ from PyQt4.QtGui import QFrame, QTableWidgetItem
 from PyQt4.uic import loadUi
 from PyQt4.QtCore import pyqtSlot
 from PacketData import PacketData
+import time
+import sys
+import StringIO
 
 #################################################################
 class PacketData_ui(QFrame):
     def __init__(self, parent = None):
 
+        self.TIME = 0
         self.SOURCE = 1
         self.DESTINATION = 2
+        self.PROTOCOL = 3
+        self.LENGTH = 4
         self.INFO = 5
 
         super(PacketData_ui, self).__init__(parent)
@@ -17,19 +23,40 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.itemSelectionChanged.connect(self.itemSelectionChangedCallback)
         parent.AddTab(self, "Packet Info")
 
-    def AddPacketData(self, packet):
+    def AddCapturedPacket(self, packet):
         self.packetList.append(packet)
+        self.AddPacketData(packet)
+
+    def AddPacketData(self, packet):
         packetData = PacketData(packet)
         
         row = self.Ui.tableWidgetPacketData.rowCount()
         self.Ui.tableWidgetPacketData.insertRow(row)
         
+        pktTime = time.strftime('%I:%M:%S %p', time.localtime(packetData.packetTime))
         # Setting data in the cells. Data to be obtained fom packetData
+        self.Ui.tableWidgetPacketData.setItem(row, self.TIME, QTableWidgetItem(pktTime))
         self.Ui.tableWidgetPacketData.setItem(row, self.SOURCE, QTableWidgetItem(packetData.srcIp))
         self.Ui.tableWidgetPacketData.setItem(row, self.DESTINATION, QTableWidgetItem(packetData.dstIp))
+        self.Ui.tableWidgetPacketData.setItem(row, self.PROTOCOL, QTableWidgetItem(packetData.layers[-2]))
+        self.Ui.tableWidgetPacketData.setItem(row, self.LENGTH, QTableWidgetItem(str(packetData.length)))
         self.Ui.tableWidgetPacketData.setItem(row, self.INFO, QTableWidgetItem(packet.summary()))
+
+    def ClearAll(self):
+        self.Ui.tableWidgetPacketData.clear()
+        self.Ui.tableWidgetPacketData.setRowCount(0)
+
+    def AddAllPackets(self, packetList):
+        for packet in packetList:
+            AddPacketData(packetList)
 
     def itemSelectionChangedCallback(self):
         x = self.Ui.tableWidgetPacketData.currentRow()
-        self.Ui.textBrowserPacketInfo.setText(self.packetList[x].summary())
+
+        stdout = sys.stdout  #keep a handle on the real standard output
+        sys.stdout = mystdout = StringIO.StringIO() #Choose a file-like object to write to
+        self.packetList[x].show()
+        sys.stdout = stdout
+        self.Ui.textBrowserPacketInfo.setText(mystdout.getvalue())
+
 

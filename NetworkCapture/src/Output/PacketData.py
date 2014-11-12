@@ -6,9 +6,25 @@ class PacketData:
         self.srcIp = "-"
         self.dstIp = "-"
 
+        self.layers = []
+        counter = 0
+        while True:
+            layer = self.packet.getlayer(counter)
+            if (layer != None):
+                self.layers.append(layer.name)
+            else:
+                break
+            counter += 1
+
         if IP in packet:
             self.srcIp = packet[IP].src
             self.dstIp = packet[IP].dst
-        
-        if ARP in packet:
-            pass
+        elif IPv6 in packet:
+            self.srcIp = packet[IPv6].src
+            self.dstIp = packet[IPv6].dst
+        elif ARP in packet:
+            self.srcIp = packet[ARP].hwsrc
+            self.dstIp = packet[ARP].hwdst
+
+        self.packetTime = packet.time
+        self.length = len(self.packet)
