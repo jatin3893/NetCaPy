@@ -53,7 +53,6 @@ class LiveCapture_ui(QObject):
         if toolBarCapture != None:
             toolBarCapture.addWidget(self.startToolButton)
             toolBarCapture.addWidget(self.stopToolButton)
-            toolBarCapture.addStretch()
 
     @pyqtSlot()
     def startToolButtonClicked(self):

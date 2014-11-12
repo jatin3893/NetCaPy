@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
+    <width>550</width>
     <height>364</height>
    </rect>
   </property>
@@ -16,12 +16,9 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <layout class="QHBoxLayout" name="toolBarCapture"/>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="toolBarAnalysis"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="toolbarFilter">
@@ -32,6 +29,22 @@
          <enum>QLayout::SetMaximumSize</enum>
         </property>
        </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="toolBarAnalysis"/>
       </item>
      </layout>
     </item>
@@ -69,7 +82,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>622</width>
+     <width>550</width>
      <height>25</height>
     </rect>
    </property>

@@ -35,7 +35,6 @@ class MainWindow(QMainWindow):
         self.show()
 
     def initUi(self):
-        self.Ui.toolbarFilter.addStretch();
         self.liveCapture_ui = LiveCapture_ui(self)
         self.captureFrame_ui = CaptureFrame_ui(self)
 
