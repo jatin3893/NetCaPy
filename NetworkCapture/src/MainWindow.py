@@ -80,7 +80,6 @@ class MainWindow(QMainWindow):
         mod = __import__(path, fromlist=[analysisUi])
         AnalysisUiClass = getattr(mod, analysisUi)
         object = AnalysisUiClass(self)
-        self.Ui.menuAnalysis.addAction(object.action)
 
     # This can be used to load a Filter at RunTime
     def AddCustomFilter(self, customFilter):
