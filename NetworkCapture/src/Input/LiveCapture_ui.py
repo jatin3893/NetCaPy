@@ -1,7 +1,9 @@
 from LiveCapture import LiveCapture
+from src.Output.PacketData_ui import PacketData_ui
 from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QPushButton, QAction
 from PyQt4.QtCore import QSize, QObject
 from PyQt4.QtCore import pyqtSlot
+import threading
 
 class LiveCapture_ui(QObject):
     def __init__(self, parent = None):
@@ -10,6 +12,7 @@ class LiveCapture_ui(QObject):
         self.initUi()
 
         self.liveCapture = None
+        self.packetDataUi = None
 
     def initUi(self):
         startPixmap = QPixmap("icons/Start.png")
@@ -40,7 +43,18 @@ class LiveCapture_ui(QObject):
         self.stopToolButton.setDisabled(True)
         self.startAction.setEnabled(True)
         self.stopAction.setDisabled(True)
-        
+
+        menuCapture = self.parent.GetMenu("Capture")
+        if menuCapture != None:
+            menuCapture.addAction(self.startAction)
+            menuCapture.addAction(self.stopAction)
+
+        toolBarCapture = self.parent.GetToolBar("Capture")
+        if toolBarCapture != None:
+            toolBarCapture.addWidget(self.startToolButton)
+            toolBarCapture.addWidget(self.stopToolButton)
+            toolBarCapture.addStretch()
+
     @pyqtSlot()
     def startToolButtonClicked(self):
 
@@ -51,6 +65,9 @@ class LiveCapture_ui(QObject):
             self.stopToolButton.setEnabled(True)
             self.startAction.setDisabled(True)
             self.stopAction.setEnabled(True)
+            self.packetDataUi = PacketData_ui(self.parent)
+            getPacketThread = GetPacketThread(self.liveCapture, self.packetDataUi)
+
 
     @pyqtSlot()
     def stopToolButtonClicked(self):
@@ -59,3 +76,21 @@ class LiveCapture_ui(QObject):
         self.startAction.setEnabled(True)
         self.stopAction.setDisabled(True)
         self.liveCapture.stopLiveCapture()
+
+class GetPacketThread(threading.Thread):
+    def __init__(self, liveCaptureObj, packetDataUiObj):
+        threading.Thread.__init__(self)
+        self.stop = threading.Event()
+        self.liveCaptureObj = liveCaptureObj
+        self.packetDataUiObj = packetDataUiObj
+        self.start()
+
+    def run(self):
+        while True:
+            if self.liveCaptureObj.liveCaptureThread.flag == True and not self.liveCaptureObj.packetBuffer:
+                break
+            else:
+                packet = self.liveCaptureObj.getPacket()
+                if packet != None:
+                    self.packetDataUiObj.AddPacketData(packet)
+        

@@ -5,10 +5,20 @@ from PyQt4.uic import loadUi
 
 #################################################################
 class BPF_ui(Filter_ui):
-    def __init__(self, parentMenu = None):
+    def __init__(self, parent = None):
         Filter_ui.__init__(self)
+        self.parent = parent
+
         self.frame = BPFFrame()
-        self.action = BPFAction(self, parentMenu)
+        self.action = BPFAction(self, parent)
+
+        toolbarFilter = self.parent.GetToolBar("Filter")
+        if toolbarFilter != None:
+            toolbarFilter.insertWidget(toolbarFilter.count() - 1, self.frame)
+
+        menuFilter = self.parent.GetMenu("Filter")
+        if menuFilter != None:
+            menuFilter.addAction(self.action)
     
     @pyqtSlot()
     def OnTrigger(self):

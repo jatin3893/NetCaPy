@@ -5,10 +5,19 @@ from PyQt4.uic import loadUi
 
 #################################################################
 class Custom_ui(Filter_ui):
-    def __init__(self, parentMenu = None):
+    def __init__(self, parent = None):
         Filter_ui.__init__(self)
+        self.parent = parent
         self.frame = CustomFrame()
-        self.action = CustomAction(self, parentMenu)
+        self.action = CustomAction(self, parent)
+
+        toolbarFilter = self.parent.GetToolBar("Filter")
+        if toolbarFilter != None:
+            toolbarFilter.insertWidget(toolbarFilter.count() - 1, self.frame)
+
+        menuFilter = self.parent.GetMenu("Filter")
+        if menuFilter != None:
+            menuFilter.addAction(self.action)
 
     def OnTrigger(self):
         print "Custom Ui Trigger"

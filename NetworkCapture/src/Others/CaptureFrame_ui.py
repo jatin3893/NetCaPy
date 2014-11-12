@@ -19,6 +19,8 @@ class CaptureFrame_ui(QFrame):
         self.Ui.buttonProjectPage.clicked.connect(self.buttonProjectPageClicked)
         self.Ui.buttonHowTo.clicked.connect(self.buttonHowToClicked)
 
+        parent.AddTab(self, "Main Page")
+
     @pyqtSlot()
     def buttonInterfaceListClicked(self):
         print "Interfaces list"

@@ -2,6 +2,7 @@ from PyQt4.uic import loadUi
 from PyQt4.QtGui import QMainWindow, QAction
 from Others.CaptureFrame_ui import CaptureFrame_ui
 from Input.LiveCapture_ui import LiveCapture_ui
+from Output.PacketData_ui import PacketData_ui
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 
@@ -9,35 +10,45 @@ from PyQt4.QtCore import SLOT
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
-        self.initUi()
+        self.Ui = loadUi('ui/MainWindow.ui', self)
 
         self.AnalysisList = ["PacketCount"]
         self.FiltersList = ["BPF"]
 
-        self.LoadInput()
+        self.menuDictionary = { "File" : self.Ui.menuFile,
+                                "Capture" : self.Ui.menuCapture,
+                                "Filter" : self.Ui.menuFilter,
+                                "Analysis" : self.Ui.menuAnalysis,
+                                "Help" : self.Ui.menuHelp}
+
+        self.toolbarDictionary = {  "Capture" : self.Ui.toolBarCapture,
+                                    "Filter" : self.Ui.toolbarFilter,
+                                    "Analysis" : self.Ui.toolBarAnalysis}
+
+        self.initUi()
+        self.liveCapture_ui = None
+        self.captureFrame_ui = None
+
         self.LoadAnalysis()
         self.LoadFilters()
 
         self.show()
 
     def initUi(self):
-        self.Ui = loadUi('ui/MainWindow.ui', self)
-
         self.Ui.toolbarFilter.addStretch();
+        self.liveCapture_ui = LiveCapture_ui(self)
+        self.captureFrame_ui = CaptureFrame_ui(self)
 
-        liveCapture_ui = LiveCapture_ui(self)
-        self.Ui.toolBarCapture.addWidget(liveCapture_ui.startToolButton)
-        self.Ui.toolBarCapture.addWidget(liveCapture_ui.stopToolButton)
-        self.Ui.toolBarCapture.addStretch()
+    def AddTab(self, frame, name):
+        index = self.Ui.tabWidget.addTab(frame, name)
+        self.Ui.tabWidget.setCurrentIndex(index)
+        return index
 
-        self.Ui.menuCapture.addAction(liveCapture_ui.startAction)
-        self.Ui.menuCapture.addAction(liveCapture_ui.stopAction)
-        
-        captureFrame_ui = CaptureFrame_ui()
-        self.Ui.tabWidget.addTab(captureFrame_ui, "Main Page")
+    def GetMenu(self, index):
+        return self.menuDictionary[index]
 
-    def LoadInput(self):
-        print "Load Input"
+    def GetToolBar(self, index):
+        return self.toolbarDictionary[index]
 
     def LoadAnalysis(self):
         print "Load Analysis"
@@ -60,8 +71,6 @@ class MainWindow(QMainWindow):
         mod = __import__(path, fromlist=[filterUi])
         filterUiClass = getattr(mod, filterUi)
         object = filterUiClass(self)
-        self.Ui.toolbarFilter.insertWidget(self.Ui.toolbarFilter.count() - 1, object.frame)
-        self.Ui.menuFilter.addAction(object.action)
 
     # 
     # Could lead to run time errors. Use try/catch to detect import errors
