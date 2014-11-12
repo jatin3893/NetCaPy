@@ -5,9 +5,9 @@ from PyQt4.QtCore import pyqtSlot
 import webbrowser;
 
 #################################################################
-class CaptureFrame(QFrame):
+class CaptureFrame_ui(QFrame):
     def __init__(self, parent = None):
-        super(CaptureFrame, self).__init__(parent)
+        super(CaptureFrame_ui, self).__init__(parent)
         self.Ui = loadUi('ui/Others/CaptureFrame.ui', self)
 
         self.Ui.buttonInterfaceList.clicked.connect(self.buttonInterfaceListClicked)

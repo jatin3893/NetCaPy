@@ -95,9 +95,15 @@
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuCapture">
+    <property name="title">
+     <string>Capture</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuAnalysis"/>
+   <addaction name="menuCapture"/>
    <addaction name="menuFilter"/>
+   <addaction name="menuAnalysis"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

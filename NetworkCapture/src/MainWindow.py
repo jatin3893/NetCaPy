@@ -1,6 +1,7 @@
 from PyQt4.uic import loadUi
 from PyQt4.QtGui import QMainWindow, QAction
-from Others.CaptureFrame import CaptureFrame
+from Others.CaptureFrame_ui import CaptureFrame_ui
+from Input.LiveCapture_ui import LiveCapture_ui
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 
@@ -24,8 +25,16 @@ class MainWindow(QMainWindow):
 
         self.Ui.toolbarFilter.addStretch();
 
-        captureFrame = CaptureFrame()
-        self.Ui.tabWidget.addTab(captureFrame, "Main Page")
+        liveCapture_ui = LiveCapture_ui(self)
+        self.Ui.toolBarCapture.addWidget(liveCapture_ui.startToolButton)
+        self.Ui.toolBarCapture.addWidget(liveCapture_ui.stopToolButton)
+        self.Ui.toolBarCapture.addStretch()
+
+        self.Ui.menuCapture.addAction(liveCapture_ui.startAction)
+        self.Ui.menuCapture.addAction(liveCapture_ui.stopAction)
+        
+        captureFrame_ui = CaptureFrame_ui()
+        self.Ui.tabWidget.addTab(captureFrame_ui, "Main Page")
 
     def LoadInput(self):
         print "Load Input"
@@ -49,19 +58,19 @@ class MainWindow(QMainWindow):
         filterUi = filter + "_ui"
         path = "src.Filter." + filterUi
         mod = __import__(path, fromlist=[filterUi])
-        filterClass = getattr(mod, filterUi)
-        object = filterClass(self.Ui.menuFilter)
+        filterUiClass = getattr(mod, filterUi)
+        object = filterUiClass(self)
         self.Ui.toolbarFilter.insertWidget(self.Ui.toolbarFilter.count() - 1, object.frame)
         self.Ui.menuFilter.addAction(object.action)
 
     # 
     # Could lead to run time errors. Use try/catch to detect import errors
     def AddAnalysis(self, analysis):
-        analysis = analysis + "_ui"
-        path = "src.Analysis." + analysis
-        mod = __import__(path, fromlist=[analysis])
-        AnalysisClass = getattr(mod, analysis)
-        object = AnalysisClass(self.Ui.menuAnalysis)
+        analysisUi = analysis + "_ui"
+        path = "src.Analysis." + analysisUi
+        mod = __import__(path, fromlist=[analysisUi])
+        AnalysisUiClass = getattr(mod, analysisUi)
+        object = AnalysisUiClass(self)
         self.Ui.menuAnalysis.addAction(object.action)
 
     # This can be used to load a Filter at RunTime
