@@ -2,6 +2,7 @@ from Filter_ui import Filter_ui, FilterAction, FilterFrame
 from BPF import BPF
 from PyQt4.QtCore import pyqtSlot
 from PyQt4.uic import loadUi
+from src.Output.PacketData_ui import PacketData_ui
 
 #################################################################
 class BPF_ui(Filter_ui):
@@ -9,7 +10,7 @@ class BPF_ui(Filter_ui):
         Filter_ui.__init__(self)
         self.parent = parent
 
-        self.frame = BPFFrame()
+        self.frame = BPFFrame(parent)
         self.action = BPFAction(self, parent)
 
         toolbarFilter = self.parent.GetToolBar("Filter")
@@ -28,6 +29,7 @@ class BPF_ui(Filter_ui):
 class BPFFrame(FilterFrame):
     def __init__(self, parent = None):
         FilterFrame.__init__(self, parent)
+        self.parent = parent
         self.Ui = loadUi('ui/Filter/BPF_ui.ui', self)
 
         self.Ui.buttonClear.clicked.connect(self.buttonClearClicked)
@@ -36,11 +38,18 @@ class BPFFrame(FilterFrame):
     @pyqtSlot()
     def buttonClearClicked(self):
         self.Ui.lineEditExpression.clear()
+        self.buttonApplyClicked()
 
     @pyqtSlot()
     def buttonApplyClicked(self):
-        print "Apply Button on BPF Filter Clicked"
-        applyFilter(self.Ui.lineEditExpression.text, PcapFile)
+        widget = self.parent.GetCurrentTab()
+        if widget != None and isinstance(widget, PacketData_ui):
+            bpf = BPF()
+            bpf.setFilterExpression(self.Ui.lineEditExpression.text())
+            bpf.setOriginalPacketList(widget.packetList)
+            bpf.filterPacketList()
+            newList = bpf.getFilteredPacketList()
+            widget.AddAllPackets(newList)
         
 #################################################################
 class BPFAction(FilterAction):

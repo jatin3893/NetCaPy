@@ -43,6 +43,9 @@ class MainWindow(QMainWindow):
         self.Ui.tabWidget.setCurrentIndex(index)
         return index
 
+    def GetCurrentTab(self):
+        return self.Ui.tabWidget.currentWidget()
+
     def GetMenu(self, index):
         return self.menuDictionary[index]
 

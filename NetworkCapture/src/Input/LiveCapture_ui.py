@@ -91,5 +91,5 @@ class GetPacketThread(threading.Thread):
             else:
                 packet = self.liveCaptureObj.getPacket()
                 if packet != None:
-                    self.packetDataUiObj.AddPacketData(packet)
+                    self.packetDataUiObj.AddCapturedPacket(packet)
         

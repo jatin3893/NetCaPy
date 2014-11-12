@@ -3,8 +3,6 @@ from scapy.all import *
 class PacketData:
     def __init__(self, packet):
         self.packet = packet
-        self.srcIp = "-"
-        self.dstIp = "-"
 
         self.layers = []
         counter = 0
@@ -15,7 +13,9 @@ class PacketData:
             else:
                 break
             counter += 1
-
+            
+        self.srcIp = "-"
+        self.dstIp = "-"
         if IP in packet:
             self.srcIp = packet[IP].src
             self.dstIp = packet[IP].dst

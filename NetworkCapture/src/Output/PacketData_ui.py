@@ -47,8 +47,9 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.setRowCount(0)
 
     def AddAllPackets(self, packetList):
+        self.ClearAll()
         for packet in packetList:
-            AddPacketData(packetList)
+            self.AddPacketData(packet)
 
     def itemSelectionChangedCallback(self):
         x = self.Ui.tableWidgetPacketData.currentRow()
