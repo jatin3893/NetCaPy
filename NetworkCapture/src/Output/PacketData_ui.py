@@ -6,6 +6,11 @@ from PacketData import PacketData
 #################################################################
 class PacketData_ui(QFrame):
     def __init__(self, parent = None):
+
+        self.SOURCE = 1
+        self.DESTINATION = 2
+        self.INFO = 5
+
         super(PacketData_ui, self).__init__(parent)
         self.Ui = loadUi('ui/Output/PacketData.ui', self)
         self.Ui.packetList = []
@@ -20,8 +25,9 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.insertRow(row)
         
         # Setting data in the cells. Data to be obtained fom packetData
-        item = QTableWidgetItem(str(row + 1))
-        self.Ui.tableWidgetPacketData.setItem(row, 0, item)
+        self.Ui.tableWidgetPacketData.setItem(row, self.SOURCE, QTableWidgetItem(packetData.srcIp))
+        self.Ui.tableWidgetPacketData.setItem(row, self.DESTINATION, QTableWidgetItem(packetData.dstIp))
+        self.Ui.tableWidgetPacketData.setItem(row, self.INFO, QTableWidgetItem(packet.summary()))
 
     def itemSelectionChangedCallback(self):
         x = self.Ui.tableWidgetPacketData.currentRow()
