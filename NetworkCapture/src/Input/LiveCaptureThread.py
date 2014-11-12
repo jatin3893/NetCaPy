@@ -4,7 +4,6 @@ from scapy.all import *
 class LiveCaptureThread(threading.Thread):
     def __init__(self, liveCaptureObj):
         threading.Thread.__init__(self)
-        self.stop = threading.Event()
         self.liveCaptureObj = liveCaptureObj
         self.flag = False
 
