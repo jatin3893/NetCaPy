@@ -77,6 +77,12 @@ class LiveCapture_ui(QObject):
         self.stopAction.setDisabled(True)
         self.liveCapture.stopLiveCapture()
 
+    def triggerStart(self):
+        self.startAction.trigger()
+
+    def triggerStop(self):
+        self.stopAction.trigger()
+        
 class GetPacketThread(threading.Thread):
     def __init__(self, liveCaptureObj, packetDataUiObj):
         threading.Thread.__init__(self)

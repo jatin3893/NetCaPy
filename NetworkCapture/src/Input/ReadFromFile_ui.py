@@ -70,3 +70,11 @@ class ReadFromFile_ui(QObject):
         widget = self.parent.GetCurrentTab()
         if widget != None and isinstance(widget, PacketData_ui):
             ReadFromFile().saveFile(strFilename, widget.packetList)
+
+    @pyqtSlot()
+    def triggerOpen(self):
+        self.openAction.trigger()
+
+    @pyqtSlot()
+    def triggerSave(self):
+        self.saveAction.trigger()

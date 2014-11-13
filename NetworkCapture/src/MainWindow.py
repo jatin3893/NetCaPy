@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
 
         self.liveCapture_ui = LiveCapture_ui(self)
         self.readFromFile_ui = ReadFromFile_ui(self)
-        self.captureFrame_ui = CaptureFrame_ui(self)
+        self.captureFrame_ui = CaptureFrame_ui(self.liveCapture_ui, self.readFromFile_ui, self)
 
         self.LoadAnalysis()
         self.LoadFilters()
