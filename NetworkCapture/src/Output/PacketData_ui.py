@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QFrame, QTableWidgetItem
+from PyQt4.QtGui import QFrame, QTableWidgetItem, QLabel
 from PyQt4.uic import loadUi
 from PyQt4.QtCore import pyqtSlot
 from PacketData import PacketData
@@ -19,20 +19,22 @@ class PacketData_ui(QFrame):
         self.INFO = 5
 
         self.Ui = loadUi('ui/Output/PacketData.ui', self)
+        self.originalList = []
         self.packetList = []
         self.Ui.tableWidgetPacketData.itemSelectionChanged.connect(self.itemSelectionChangedCallback)
         parent.AddTab(self, "Packet Info")
 
     def ClearPacketList(self):
         self.packetList = []
-        
+
     def AddPacket(self, packet):
-        self.packetList.append(packet)
+        self.originalList.append(packet)
         self.AddPacketData(packet)
 
     def AddPacketData(self, packet):
         packetData = PacketData(packet)
-        
+        self.packetList.append(packet)
+
         row = self.Ui.tableWidgetPacketData.rowCount()
         self.Ui.tableWidgetPacketData.insertRow(row)
         
@@ -49,9 +51,10 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.clear()
         self.Ui.tableWidgetPacketData.setRowCount(0)
 
-    def AddAllPackets(self, packetList):
+    def SetPacketList(self, packetLists):
         self.ClearAll()
-        for packet in packetList:
+        self.packetList = []
+        for packet in packetLists:
             self.AddPacketData(packet)
 
     def itemSelectionChangedCallback(self):
@@ -61,6 +64,7 @@ class PacketData_ui(QFrame):
         sys.stdout = mystdout = StringIO.StringIO() #Choose a file-like object to write to
         self.packetList[x].show()
         sys.stdout = stdout
-        self.Ui.textBrowserPacketInfo.setText(mystdout.getvalue())
+        # self.Ui.textBrowserPacketInfo.setText(mystdout.getvalue())
+        self.Ui.textBrowserPacketInfo.setText(self.packetList[x].summary())
 
 

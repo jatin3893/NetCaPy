@@ -12,3 +12,6 @@ class ReadFromFile:
 
 	def setFilename(self, filename):
 		self.filename = filename
+
+	def saveFile(self, filename, packetList):
+		wrpcap(filename, packetList)

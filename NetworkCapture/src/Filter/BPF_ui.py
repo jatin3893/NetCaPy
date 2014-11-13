@@ -47,10 +47,10 @@ class BPFFrame(FilterFrame):
         if widget != None and isinstance(widget, PacketData_ui):
             bpf = BPF()
             bpf.setFilterExpression(self.Ui.lineEditExpression.text())
-            bpf.setOriginalPacketList(widget.packetList)
+            bpf.setOriginalPacketList(widget.originalList)
             bpf.filterPacketList()
             newList = bpf.getFilteredPacketList()
-            widget.AddAllPackets(newList)
+            widget.SetPacketList(newList)
         
 #################################################################
 class BPFAction(FilterAction):

@@ -50,15 +50,23 @@ class ReadFromFile_ui(QObject):
     @pyqtSlot()
     def openToolButtonClicked(self):
         filename = QFileDialog.getOpenFileName(self.parent, "Load Pcap File", "/home/", "*.pcap")
-        readFromFile = ReadFromFile()
-        readFromFile.setFilename(str(filename))
-        print filename
-        packets = readFromFile.readPackets()
-        self.packetDataUi = PacketData_ui(self.parent)
-        for packet in packets:
-            self.packetDataUi.AddPacket(packet)
+        if str(filename) != None:
+            readFromFile = ReadFromFile()
+            readFromFile.setFilename(str(filename))
+            packets = readFromFile.readPackets()
+            self.packetDataUi = PacketData_ui(self.parent)
+            for packet in packets:
+                self.packetDataUi.AddPacket(packet)
 
 
     @pyqtSlot()
     def saveToolButtonClicked(self):
-        print QFileDialog.getSaveFileName(self.parent, "Save Pcap File", "/home/", "*.pcap")
+        filename = QFileDialog.getSaveFileName(self.parent, "Save Pcap File", "/home/", "*.pcap")
+        strFilename = str(filename)
+        print strFilename
+        if not strFilename.endswith(".pcap"):
+            strFilename = strFilename + ".pcap"
+            
+        widget = self.parent.GetCurrentTab()
+        if widget != None and isinstance(widget, PacketData_ui):
+            ReadFromFile().saveFile(strFilename, widget.packetList)
