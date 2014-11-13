@@ -13,9 +13,10 @@ class BPF_ui(Filter_ui):
         self.frame = BPFFrame(parent)
         self.action = BPFAction(self, parent)
 
-        toolbarFilter = self.parent.GetToolBar("Filter")
-        if toolbarFilter != None:
-            toolbarFilter.insertWidget(toolbarFilter.count() - 1, self.frame)
+        toolBarFilter = self.parent.GetToolBar("Filter")
+        if toolBarFilter != None:
+            toolBarFilter.addWidget(self.frame)
+            toolBarFilter.addSeparator()
 
         menuFilter = self.parent.GetMenu("Filter")
         if menuFilter != None:

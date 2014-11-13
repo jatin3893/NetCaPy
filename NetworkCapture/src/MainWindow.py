@@ -3,6 +3,7 @@ from PyQt4.QtGui import QMainWindow, QAction
 from Others.CaptureFrame_ui import CaptureFrame_ui
 from Input.LiveCapture_ui import LiveCapture_ui
 from Output.PacketData_ui import PacketData_ui
+from Input.ReadFromFile_ui import ReadFromFile_ui
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 
@@ -11,6 +12,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
         self.Ui = loadUi('ui/MainWindow.ui', self)
+        self.showMaximized()
 
         self.AnalysisList = ["PacketCount"]
         self.FiltersList = ["BPF"]
@@ -21,22 +23,18 @@ class MainWindow(QMainWindow):
                                 "Analysis" : self.Ui.menuAnalysis,
                                 "Help" : self.Ui.menuHelp}
 
-        self.toolbarDictionary = {  "Capture" : self.Ui.toolBarCapture,
-                                    "Filter" : self.Ui.toolbarFilter,
-                                    "Analysis" : self.Ui.toolBarAnalysis}
+        self.toolbarDictionary = {  "Capture" : self.Ui.toolBarLiveCapture,
+                                    "Filter" : self.Ui.toolBarFilter,
+                                    "File" : self.Ui.toolBarFile}
 
-        self.initUi()
-        self.liveCapture_ui = None
-        self.captureFrame_ui = None
+        self.liveCapture_ui = LiveCapture_ui(self)
+        self.readFromFile_ui = ReadFromFile_ui(self)
+        self.captureFrame_ui = CaptureFrame_ui(self)
 
         self.LoadAnalysis()
         self.LoadFilters()
 
         self.show()
-
-    def initUi(self):
-        self.liveCapture_ui = LiveCapture_ui(self)
-        self.captureFrame_ui = CaptureFrame_ui(self)
 
     def AddTab(self, frame, name):
         index = self.Ui.tabWidget.addTab(frame, name)

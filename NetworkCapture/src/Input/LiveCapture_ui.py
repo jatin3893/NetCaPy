@@ -1,6 +1,6 @@
 from LiveCapture import LiveCapture
 from src.Output.PacketData_ui import PacketData_ui
-from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QPushButton, QAction
+from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QAction
 from PyQt4.QtCore import QSize, QObject
 from PyQt4.QtCore import pyqtSlot
 import threading
@@ -48,6 +48,7 @@ class LiveCapture_ui(QObject):
         if menuCapture != None:
             menuCapture.addAction(self.startAction)
             menuCapture.addAction(self.stopAction)
+        menuCapture.addSeparator()
 
         toolBarCapture = self.parent.GetToolBar("Capture")
         if toolBarCapture != None:
@@ -91,5 +92,5 @@ class GetPacketThread(threading.Thread):
             else:
                 packet = self.liveCaptureObj.getPacket()
                 if packet != None:
-                    self.packetDataUiObj.AddCapturedPacket(packet)
+                    self.packetDataUiObj.AddPacket(packet)
         

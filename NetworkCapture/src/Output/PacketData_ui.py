@@ -9,6 +9,7 @@ import StringIO
 #################################################################
 class PacketData_ui(QFrame):
     def __init__(self, parent = None):
+        super(PacketData_ui, self).__init__(parent)
 
         self.TIME = 0
         self.SOURCE = 1
@@ -17,13 +18,15 @@ class PacketData_ui(QFrame):
         self.LENGTH = 4
         self.INFO = 5
 
-        super(PacketData_ui, self).__init__(parent)
         self.Ui = loadUi('ui/Output/PacketData.ui', self)
-        self.Ui.packetList = []
+        self.packetList = []
         self.Ui.tableWidgetPacketData.itemSelectionChanged.connect(self.itemSelectionChangedCallback)
         parent.AddTab(self, "Packet Info")
 
-    def AddCapturedPacket(self, packet):
+    def ClearPacketList(self):
+        self.packetList = []
+        
+    def AddPacket(self, packet):
         self.packetList.append(packet)
         self.AddPacketData(packet)
 

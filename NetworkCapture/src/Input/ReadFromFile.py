@@ -1,7 +1,7 @@
 from scapy.all import *
 
 class ReadFromFile:
-	def __init__():
+	def __init__(self):
 		self.filename = ''
 
 	def readPackets(self):
