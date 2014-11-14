@@ -1,5 +1,5 @@
 from PyQt4.uic import loadUi
-from PyQt4.QtGui import QMainWindow, QAction
+from PyQt4.QtGui import QMainWindow, QAction, qApp
 from Others.CaptureFrame_ui import CaptureFrame_ui
 from Input.LiveCapture_ui import LiveCapture_ui
 from Output.PacketData_ui import PacketData_ui
@@ -35,6 +35,10 @@ class MainWindow(QMainWindow):
         self.LoadAnalysis()
         self.LoadFilters()
 
+        exit = QAction("Exit", self)
+        exit.triggered.connect(qApp.closeAllWindows)
+        self.Ui.menuFile.addAction(exit)
+        
         self.show()
 
     def AddTab(self, frame, name):

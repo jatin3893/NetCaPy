@@ -1,9 +1,10 @@
-from PyQt4.QtGui import QFrame
+from PyQt4.QtGui import QFrame, QDialog, QTableWidgetItem
 from PyQt4.uic import loadUi
 from PyQt4.QtCore import pyqtSlot
 from src.Input.LiveCapture_ui import LiveCapture_ui
 from src.Input.ReadFromFile_ui import ReadFromFile_ui
-import webbrowser;
+import webbrowser
+import netifaces
 
 #################################################################
 class CaptureFrame_ui(QFrame):
@@ -23,8 +24,15 @@ class CaptureFrame_ui(QFrame):
 
     @pyqtSlot()
     def buttonInterfaceListClicked(self):
-        print "Interfaces list"
-        
+        obj = QDialog()
+        objUi = loadUi('ui/Others/InterfaceSelectionDialog.ui', obj)
+        count = 0
+        for i in netifaces.interfaces():
+            objUi.tableWidgetInterface.insertRow(count)
+            objUi.tableWidgetInterface.setItem(count, 0, QTableWidgetItem(i))
+            count = count + 1
+        obj.exec_()
+
     @pyqtSlot()
     def buttonSampleFilesClicked(self):
         print "Sample Files"

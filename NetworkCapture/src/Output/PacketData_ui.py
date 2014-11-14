@@ -48,7 +48,6 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.setItem(row, self.INFO, QTableWidgetItem(packet.summary()))
 
     def ClearAll(self):
-        self.Ui.tableWidgetPacketData.clear()
         self.Ui.tableWidgetPacketData.setRowCount(0)
 
     def SetPacketList(self, packetLists):

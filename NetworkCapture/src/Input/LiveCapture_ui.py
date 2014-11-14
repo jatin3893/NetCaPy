@@ -111,7 +111,7 @@ class GetPacketThread(threading.Thread):
 class InterfaceSelection(QDialog):
     def __init__(self, parent = None):
         super(InterfaceSelection, self).__init__(parent)
-        self.Ui = loadUi('ui/Input/InterfaceSelectionDialog.ui', self)
+        self.Ui = loadUi('ui/Others/InterfaceSelectionDialog.ui', self)
         self.loadInterfaces()
 
     def loadInterfaces(self):
