@@ -1,3 +1,16 @@
+#################################################################################
+# NetCaPy v1.0                                                                  #
+# A Python based Network Packet capturing tool built on top of ScaPy and PyQt4  #
+#                                                                               #
+#################################################################################
+#                                                                               #
+# Module: ReadFromFile_ui                                                       #
+# Description:                                                                  #
+# PyQt based GUI wrapper on top of the ReadFromFile Module to implement the     #
+# Open/Save pcap file actions                                                   #
+#                                                                               #
+#################################################################################
+
 from PyQt4.QtGui import QFrame, QTableWidgetItem, QLabel
 from PyQt4.uic import loadUi
 from PyQt4.QtCore import pyqtSlot
@@ -6,7 +19,8 @@ import time
 import sys
 import StringIO
 
-#################################################################
+'''
+'''
 class PacketData_ui(QFrame):
     def __init__(self, parent = None):
         super(PacketData_ui, self).__init__(parent)
@@ -24,13 +38,22 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.itemSelectionChanged.connect(self.itemSelectionChangedCallback)
         parent.AddTab(self, "Packet Info")
 
+    '''
+    Clear list of packets currently being displayed
+    '''
     def ClearPacketList(self):
         self.packetList = []
 
+    '''
+    Add packet to List and display it in appropriate Widget
+    '''
     def AddPacket(self, packet):
         self.originalList.append(packet)
         self.AddPacketData(packet)
 
+    '''
+    Obtain packet, extract the specific fields using the PacketData module and display it
+    '''
     def AddPacketData(self, packet):
         packetData = PacketData(packet)
         self.packetList.append(packet)
@@ -47,15 +70,25 @@ class PacketData_ui(QFrame):
         self.Ui.tableWidgetPacketData.setItem(row, self.LENGTH, QTableWidgetItem(str(packetData.length)))
         self.Ui.tableWidgetPacketData.setItem(row, self.INFO, QTableWidgetItem(packet.summary()))
 
+    '''
+    Remove all packet info currently being displayed
+    '''
     def ClearAll(self):
         self.Ui.tableWidgetPacketData.setRowCount(0)
 
+    '''
+    Clear all packets currently being displayed in the widget and
+    display the packets present in the list
+    '''
     def SetPacketList(self, packetLists):
         self.ClearAll()
         self.packetList = []
         for packet in packetLists:
             self.AddPacketData(packet)
 
+    '''
+    Display summary of the currently selected packet
+    '''
     def itemSelectionChangedCallback(self):
         x = self.Ui.tableWidgetPacketData.currentRow()
 

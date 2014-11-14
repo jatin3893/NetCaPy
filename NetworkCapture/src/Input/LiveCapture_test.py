@@ -1,9 +1,30 @@
+#################################################################################
+# NetCaPy v1.0                                                                  #
+# A Python based Network Packet capturing tool built on top of ScaPy and PyQt4  #
+#                                                                               #
+#################################################################################
+#                                                                               #
+# Module: LiveCapture_test                                                      #
+# Description:                                                                  #
+# Test file for testing capturing of packets over the interface                 #
+#                                                                               #
+#################################################################################
+
 from unittest import TestCase, main
 from scapy.all import *
 from LiveCapture import LiveCapture
 from LiveCaptureThread import LiveCaptureThread
 
+'''
+Description:
+
+'''
 class TestCapture(TestCase):
+    '''
+    Test 1:
+    Send packets over localhost and capture them using the LiveCapture module
+    Verify if the packets have been captured by comparing their layers
+    '''
     def test_StopCapture(self):
         capture = LiveCapture()
         capture.startLiveCapture()

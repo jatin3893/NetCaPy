@@ -1,6 +1,24 @@
+#################################################################################
+# NetCaPy v1.0                                                                  #
+# A Python based Network Packet capturing tool built on top of ScaPy and PyQt4  #
+#                                                                               #
+#################################################################################
+#                                                                               #
+# Module: ReadFromFile_ui                                                       #
+# Description:                                                                  #
+# Obtain specific fields from packet as required for display                    #
+#                                                                               #
+#################################################################################
+
 from scapy.all import *
 
+'''
+'''
 class PacketData:
+
+    '''
+    Obtatin Time, Src, Dst, Protocol, length and Summary of the packet 
+    '''
     def __init__(self, packet):
         self.packet = packet
 

@@ -1,4 +1,3 @@
-#################################################################
 class Analysis:
-	def __init__(self):
-		print "Analysis Base Class"
+    def __init__(self):
+        print "Analysis Base Class"
