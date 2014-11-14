@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.Ui = loadUi('ui/MainWindow.ui', self)
         self.showMaximized()
 
-        self.AnalysisList = ["PacketCount"]
+        self.AnalysisList = ["PacketSizeGraph", "ProtocolCountGraph"]
         self.FiltersList = ["BPF"]
 
         self.menuDictionary = { "File" : self.Ui.menuFile,
@@ -25,7 +25,8 @@ class MainWindow(QMainWindow):
 
         self.toolbarDictionary = {  "Capture" : self.Ui.toolBarLiveCapture,
                                     "Filter" : self.Ui.toolBarFilter,
-                                    "File" : self.Ui.toolBarFile}
+                                    "File" : self.Ui.toolBarFile,
+                                    "Analysis" : self.Ui.toolBarAnalysis}
 
         self.liveCapture_ui = LiveCapture_ui(self)
         self.readFromFile_ui = ReadFromFile_ui(self)

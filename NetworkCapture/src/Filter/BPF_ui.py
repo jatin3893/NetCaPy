@@ -1,6 +1,7 @@
 from Filter_ui import Filter_ui, FilterAction, FilterFrame
 from BPF import BPF
 from PyQt4.QtCore import pyqtSlot
+from PyQt4.QtGui import QDialog
 from PyQt4.uic import loadUi
 from src.Output.PacketData_ui import PacketData_ui
 
@@ -24,14 +25,18 @@ class BPF_ui(Filter_ui):
     
     @pyqtSlot()
     def OnTrigger(self):
-        print "BPF Action Triggered"
+        obj = QDialog()
+        objUi = loadUi('ui/Filter/BPFDialog_ui.ui', obj)
+        if obj.exec_() == QDialog.Accepted:
+            self.frame.Ui.lineEditExpression.setText(objUi.lineEditExpression.text())
+            self.frame.buttonApplyClicked()
 
 #################################################################
 class BPFFrame(FilterFrame):
     def __init__(self, parent = None):
         FilterFrame.__init__(self, parent)
         self.parent = parent
-        self.Ui = loadUi('ui/Filter/BPF_ui.ui', self)
+        self.Ui = loadUi('ui/Filter/BPFToolbar_ui.ui', self)
 
         self.Ui.buttonClear.clicked.connect(self.buttonClearClicked)
         self.Ui.buttonApply.clicked.connect(self.buttonApplyClicked)
@@ -57,3 +62,9 @@ class BPFAction(FilterAction):
     def __init__(self, filterUi, parent = None):
         FilterAction.__init__(self, filterUi, parent)
         self.setText("BPF")
+
+#################################################################
+class BPFDialog(QDialog):
+    def __init__(self, parent = None):
+        super(InterfaceSelection, self).__init__(parent)
+        self.Ui = loadUi('ui/Filter/BPFDialog_ui.ui', self)
