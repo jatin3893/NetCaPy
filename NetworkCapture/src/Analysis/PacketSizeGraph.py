@@ -22,5 +22,5 @@ class PacketSizeGraph(Analysis):
 		plt.plot(countList, sizeList, 'ro')
 		plt.xlabel('Packet Number')
 		plt.ylabel('Packet Size (bytes)')
-		plt.title('Paket Size Graph')
+		plt.title('Packet Size Graph')
 		plt.show()
