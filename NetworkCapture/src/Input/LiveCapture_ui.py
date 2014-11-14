@@ -1,9 +1,11 @@
 from LiveCapture import LiveCapture
 from src.Output.PacketData_ui import PacketData_ui
-from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QAction
+from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QAction, QDialog, QTableWidgetItem
 from PyQt4.QtCore import QSize, QObject
 from PyQt4.QtCore import pyqtSlot
+from PyQt4.uic import loadUi
 import threading
+import netifaces
 
 class LiveCapture_ui(QObject):
     def __init__(self, parent = None):
@@ -57,8 +59,13 @@ class LiveCapture_ui(QObject):
 
     @pyqtSlot()
     def startToolButtonClicked(self):
-
         self.liveCapture = LiveCapture()
+        iface = InterfaceSelection(self.parent)
+        ifaceName = iface.GetInterface()
+        if ifaceName == None:
+            return
+        self.liveCapture.setInterface(ifaceName)
+
         retVal = self.liveCapture.startLiveCapture()
         if retVal != -1:
             self.startToolButton.setDisabled(True)
@@ -100,3 +107,23 @@ class GetPacketThread(threading.Thread):
                 if packet != None:
                     self.packetDataUiObj.AddPacket(packet)
         
+
+class InterfaceSelection(QDialog):
+    def __init__(self, parent = None):
+        super(InterfaceSelection, self).__init__(parent)
+        self.Ui = loadUi('ui/Input/InterfaceSelectionDialog.ui', self)
+        self.loadInterfaces()
+
+    def loadInterfaces(self):
+        count = 0
+        for i in netifaces.interfaces():
+            self.Ui.tableWidgetInterface.insertRow(count)
+            self.Ui.tableWidgetInterface.setItem(count, 0, QTableWidgetItem(i))
+            count = count + 1
+
+    def GetInterface(self):
+        retVal = self.exec_()
+        if retVal == QDialog.Rejected:
+                return None
+        x = self.Ui.tableWidgetInterface.currentRow()
+        return str(self.Ui.tableWidgetInterface.item(x, 0).text())

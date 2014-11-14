@@ -51,12 +51,10 @@ class MainWindow(QMainWindow):
         return self.toolbarDictionary[index]
 
     def LoadAnalysis(self):
-        print "Load Analysis"
         for analysis in self.AnalysisList:
             self.AddAnalysis(analysis)
 
     def LoadFilters(self):
-        print "Load Filters"
         for filter in self.FiltersList:
             self.AddFilter(filter)
 

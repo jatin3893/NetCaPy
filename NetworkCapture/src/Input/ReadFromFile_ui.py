@@ -63,7 +63,6 @@ class ReadFromFile_ui(QObject):
     def saveToolButtonClicked(self):
         filename = QFileDialog.getSaveFileName(self.parent, "Save Pcap File", "/home/", "*.pcap")
         strFilename = str(filename)
-        print strFilename
         if not strFilename.endswith(".pcap"):
             strFilename = strFilename + ".pcap"
             

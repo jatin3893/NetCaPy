@@ -64,7 +64,6 @@ class PacketData_ui(QFrame):
         sys.stdout = mystdout = StringIO.StringIO() #Choose a file-like object to write to
         self.packetList[x].show()
         sys.stdout = stdout
-        # self.Ui.textBrowserPacketInfo.setText(mystdout.getvalue())
-        self.Ui.textBrowserPacketInfo.setText(self.packetList[x].summary())
+        self.Ui.textBrowserPacketInfo.setText(mystdout.getvalue())
 
 
