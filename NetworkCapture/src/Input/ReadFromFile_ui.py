@@ -15,6 +15,7 @@ from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QPushButton, QAction, QFile
 from PyQt4.QtCore import pyqtSlot, QObject, QSize
 from ReadFromFile import ReadFromFile
 from src.Output.PacketData_ui import PacketData_ui
+import os
 
 '''
 '''
@@ -30,8 +31,8 @@ class ReadFromFile_ui(QObject):
     Initialise the Icons and Menu Items to add to the Interface
     '''
     def initUi(self):
-        openPixmap = QPixmap("icons/Open.png")
-        savePixmap = QPixmap("icons/Save.png")
+        openPixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/Open.png')
+        savePixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/Save.png')
 
         openIcon = QIcon(openPixmap)
         saveIcon = QIcon(savePixmap)
@@ -74,7 +75,7 @@ class ReadFromFile_ui(QObject):
     @pyqtSlot()
     def openToolButtonClicked(self):
         filename = QFileDialog.getOpenFileName(self.parent, "Load Pcap File", "/home/", "*.pcap")
-        if str(filename) != None:
+        if str(filename) != "":
             readFromFile = ReadFromFile()
             readFromFile.setFilename(str(filename))
             packets = readFromFile.readPackets()

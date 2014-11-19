@@ -18,6 +18,7 @@ from Output.PacketData_ui import PacketData_ui
 from Input.ReadFromFile_ui import ReadFromFile_ui
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
+import os
 
 '''
 Description:
@@ -31,7 +32,7 @@ class MainWindow(QMainWindow):
     '''
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
-        self.Ui = loadUi('ui/MainWindow.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/MainWindow.ui', self)
         self.showMaximized()
 
         self.AnalysisList = ["PacketSizeGraph", "ProtocolCountGraph"]

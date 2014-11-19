@@ -16,6 +16,7 @@ from src.Input.LiveCapture_ui import LiveCapture_ui
 from src.Input.ReadFromFile_ui import ReadFromFile_ui
 import webbrowser
 import netifaces
+import os
 
 '''
 Description:
@@ -29,7 +30,7 @@ class CaptureFrame_ui(QFrame):
     def __init__(self, liveCapture = None, readFromFile = None, parent = None):
         super(CaptureFrame_ui, self).__init__(parent)
         self.parent = parent
-        self.Ui = loadUi('ui/Others/CaptureFrame.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/CaptureFrame.ui', self)
 
         self.Ui.buttonInterfaceList.clicked.connect(self.buttonInterfaceListClicked)
         self.Ui.buttonStartCapture.clicked.connect(liveCapture.triggerStart)
@@ -47,7 +48,7 @@ class CaptureFrame_ui(QFrame):
     @pyqtSlot()
     def buttonInterfaceListClicked(self):
         obj = QDialog()
-        objUi = loadUi('ui/Others/InterfaceSelectionDialog.ui', obj)
+        objUi = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/InterfaceSelectionDialog.ui', obj)
         count = 0
         for i in netifaces.interfaces():
             objUi.tableWidgetInterface.insertRow(count)

@@ -15,6 +15,7 @@ from ProtocolCountGraph import ProtocolCountGraph
 from src.Output.PacketData_ui import PacketData_ui
 from PyQt4.QtGui import QIcon, QPixmap, QToolButton
 from PyQt4.QtCore import QSize
+import os
 
 '''
 Description:
@@ -36,7 +37,7 @@ class ProtocolCountGraph_ui(Analysis_ui):
 
         toolBarAnalysis = self.parent.GetToolBar("Analysis")
         if toolBarAnalysis != None:
-            pcgPixmap = QPixmap("icons/barGraph.png")
+            pcgPixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/barGraph.png')
             pcgIcon = QIcon(pcgPixmap)
             self.pcgButton = QToolButton(self.parent)
             self.pcgButton.setIcon(pcgIcon)

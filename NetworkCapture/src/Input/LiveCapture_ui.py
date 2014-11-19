@@ -19,6 +19,7 @@ from PyQt4.QtCore import pyqtSlot
 from PyQt4.uic import loadUi
 import threading
 import netifaces
+import os
 
 '''
 Description:
@@ -41,8 +42,8 @@ class LiveCapture_ui(QObject):
     Add corresponding actions/tool buttons to toolbars/menubars of the mainWindow
     '''
     def initUi(self):
-        startPixmap = QPixmap("icons/Start.png")
-        stopPixmap = QPixmap("icons/Stop.png")
+        startPixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/Start.png')
+        stopPixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/Stop.png')
 
         startIcon = QIcon(startPixmap)
         stopIcon = QIcon(stopPixmap)
@@ -173,7 +174,7 @@ the packet
 class InterfaceSelection(QDialog):
     def __init__(self, parent = None):
         super(InterfaceSelection, self).__init__(parent)
-        self.Ui = loadUi('ui/Others/InterfaceSelectionDialog.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/InterfaceSelectionDialog.ui', self)
         self.loadInterfaces()
 
     '''

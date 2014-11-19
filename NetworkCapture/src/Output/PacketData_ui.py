@@ -18,6 +18,7 @@ from PacketData import PacketData
 import time
 import sys
 import StringIO
+import os
 
 '''
 '''
@@ -32,7 +33,7 @@ class PacketData_ui(QFrame):
         self.LENGTH = 4
         self.INFO = 5
 
-        self.Ui = loadUi('ui/Output/PacketData.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/PacketData.ui', self)
         self.originalList = []
         self.packetList = []
         self.Ui.tableWidgetPacketData.itemSelectionChanged.connect(self.itemSelectionChangedCallback)

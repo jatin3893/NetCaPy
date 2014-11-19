@@ -15,6 +15,7 @@ from PacketSizeGraph import PacketSizeGraph
 from src.Output.PacketData_ui import PacketData_ui
 from PyQt4.QtGui import QIcon, QPixmap, QToolButton
 from PyQt4.QtCore import QSize
+import os
 
 '''
 Description:
@@ -36,7 +37,7 @@ class PacketSizeGraph_ui(Analysis_ui):
 
         toolBarAnalysis = self.parent.GetToolBar("Analysis")
         if toolBarAnalysis != None:
-            pSizePixmap = QPixmap("icons/pointChart.png")
+            pSizePixmap = QPixmap(os.path.dirname(os.path.realpath(__file__)) + '/pointChart.png')
             pSizeIcon = QIcon(pSizePixmap)
             self.pSizeButton = QToolButton(self.parent)
             self.pSizeButton.setIcon(pSizeIcon)

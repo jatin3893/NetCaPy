@@ -13,6 +13,7 @@ from Filter_ui import Filter_ui, FilterAction, FilterFrame
 from Custom import Custom
 from PyQt4.QtCore import pyqtSlot
 from PyQt4.uic import loadUi
+import os
 
 '''
 Description:
@@ -48,7 +49,7 @@ Description:
 class CustomFrame(FilterFrame):
     def __init__(self, parent = None):
         FilterFrame.__init__(self, parent)
-        self.Ui = loadUi('ui/Filter/Custom_ui.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/Custom_ui.ui', self)
         self.Ui.buttonCustom.clicked.connect(self.buttonCustomClicked)
     
     @pyqtSlot()

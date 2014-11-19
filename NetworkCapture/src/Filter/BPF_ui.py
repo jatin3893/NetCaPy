@@ -16,6 +16,7 @@ from PyQt4.QtCore import pyqtSlot
 from PyQt4.QtGui import QDialog
 from PyQt4.uic import loadUi
 from src.Output.PacketData_ui import PacketData_ui
+import os
 
 '''
 Description:
@@ -49,7 +50,7 @@ class BPF_ui(Filter_ui):
     @pyqtSlot()
     def OnTrigger(self):
         obj = QDialog()
-        objUi = loadUi('ui/Filter/BPFDialog_ui.ui', obj)
+        objUi = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/BPFDialog_ui.ui', obj)
         if obj.exec_() == QDialog.Accepted:
             self.frame.Ui.lineEditExpression.setText(objUi.lineEditExpression.text())
             self.frame.buttonApplyClicked()
@@ -66,7 +67,7 @@ class BPFFrame(FilterFrame):
     def __init__(self, parent = None):
         FilterFrame.__init__(self, parent)
         self.parent = parent
-        self.Ui = loadUi('ui/Filter/BPFToolbar_ui.ui', self)
+        self.Ui = loadUi(os.path.dirname(os.path.realpath(__file__)) + '/BPFToolbar_ui.ui', self)
 
         self.Ui.buttonClear.clicked.connect(self.buttonClearClicked)
         self.Ui.buttonApply.clicked.connect(self.buttonApplyClicked)
