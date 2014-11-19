@@ -16,16 +16,17 @@ Install
 * Install using the command
 
 	**# python setup.py install**
+* Execute the application by typing **netcapy** on the terminal
 
 Uninstall
 --------------------------------------------------------------------------------------------
-* There is no automatic installation instruction available. Therefore, all files need to be deleted manually.
+* There is no automatic un-installation instruction available. Therefore, all files need to be deleted manually.
 * Follow the following steps:
 	* Install once again, and note the files which have been changed
 
 		**# sudo python setup.py install --record files.txt**
 	* All the files created are now listed in **files.txt**. Delete them using the following command
-	
+
 		**xargs rm -rf < files.txt**
 
 Features
