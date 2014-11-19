@@ -14,6 +14,7 @@ Install
 --------------------------------------------------------------------------------------------
 * Make sure all the installation requirements have been fulfilled. Due to incomplete setup file, the requirements may not be installed automatically
 * Install using the command
+
 	**# python setup.py install**
 
 Uninstall
@@ -21,8 +22,10 @@ Uninstall
 * There is no automatic installation instruction available. Therefore, all files need to be deleted manually.
 * Follow the following steps:
 	* Install once again, and note the files which have been changed
+
 		**# sudo python setup.py install --record files.txt**
 	* All the files created are now listed in **files.txt**. Delete them using the following command
+	
 		**xargs rm -rf < files.txt**
 
 Features
