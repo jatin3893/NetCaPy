@@ -12,10 +12,10 @@
 
 from PyQt4.uic import loadUi
 from PyQt4.QtGui import QMainWindow, QAction, qApp
-from Others.CaptureFrame_ui import CaptureFrame_ui
-from Input.LiveCapture_ui import LiveCapture_ui
-from Output.PacketData_ui import PacketData_ui
-from Input.ReadFromFile_ui import ReadFromFile_ui
+from NetCaPy.Others.CaptureFrame_ui import CaptureFrame_ui
+from NetCaPy.Input.LiveCapture_ui import LiveCapture_ui
+from NetCaPy.Output.PacketData_ui import PacketData_ui
+from NetCaPy.Input.ReadFromFile_ui import ReadFromFile_ui
 from PyQt4.QtCore import Qt
 from PyQt4.QtCore import SLOT
 import os
@@ -123,7 +123,7 @@ class MainWindow(QMainWindow):
     def AddFilter(self, filter):
         # Could lead to run time errors. Use try/catch to detect import errors
         filterUi = filter + "_ui"
-        path = "src.Filter." + filterUi
+        path = "NetCaPy.Filter." + filterUi
         mod = __import__(path, fromlist=[filterUi])
         filterUiClass = getattr(mod, filterUi)
         object = filterUiClass(self)
@@ -135,7 +135,7 @@ class MainWindow(QMainWindow):
     def AddAnalysis(self, analysis):
         # Could lead to run time errors. Use try/catch to detect import errors
         analysisUi = analysis + "_ui"
-        path = "src.Analysis." + analysisUi
+        path = "NetCaPy.Analysis." + analysisUi
         mod = __import__(path, fromlist=[analysisUi])
         AnalysisUiClass = getattr(mod, analysisUi)
         object = AnalysisUiClass(self)

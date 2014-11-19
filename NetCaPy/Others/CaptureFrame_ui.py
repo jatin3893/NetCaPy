@@ -12,8 +12,8 @@
 from PyQt4.QtGui import QFrame, QDialog, QTableWidgetItem
 from PyQt4.uic import loadUi
 from PyQt4.QtCore import pyqtSlot
-from src.Input.LiveCapture_ui import LiveCapture_ui
-from src.Input.ReadFromFile_ui import ReadFromFile_ui
+from NetCaPy.Input.LiveCapture_ui import LiveCapture_ui
+from NetCaPy.Input.ReadFromFile_ui import ReadFromFile_ui
 import webbrowser
 import netifaces
 import os

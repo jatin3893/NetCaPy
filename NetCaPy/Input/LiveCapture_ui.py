@@ -12,7 +12,7 @@
 #################################################################################
 
 from LiveCapture import LiveCapture
-from src.Output.PacketData_ui import PacketData_ui
+from NetCaPy.Output.PacketData_ui import PacketData_ui
 from PyQt4.QtGui import QIcon, QPixmap, QToolButton, QAction, QDialog, QTableWidgetItem
 from PyQt4.QtCore import QSize, QObject
 from PyQt4.QtCore import pyqtSlot

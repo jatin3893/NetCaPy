@@ -12,7 +12,7 @@
 
 from Analysis_ui import Analysis_ui, AnalysisAction
 from PacketSizeGraph import PacketSizeGraph
-from src.Output.PacketData_ui import PacketData_ui
+from NetCaPy.Output.PacketData_ui import PacketData_ui
 from PyQt4.QtGui import QIcon, QPixmap, QToolButton
 from PyQt4.QtCore import QSize
 import os

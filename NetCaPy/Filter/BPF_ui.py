@@ -15,7 +15,7 @@ from BPF import BPF
 from PyQt4.QtCore import pyqtSlot
 from PyQt4.QtGui import QDialog
 from PyQt4.uic import loadUi
-from src.Output.PacketData_ui import PacketData_ui
+from NetCaPy.Output.PacketData_ui import PacketData_ui
 import os
 
 '''
